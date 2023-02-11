@@ -1,7 +1,7 @@
 require 'lmdb'
 require './constants'
 
-db = LMDB.new(DB_NAME, :mapsize => 1099511627776).database
+db = LMDB.new(DB_NAME, :mapsize => MAPSIZE).database
 
 File.foreach("list.txt") {|l|
   r = l.strip.split
