@@ -12,7 +12,7 @@ while gets
     print "#{count}: existing #{fn}: #{cid}\n"
   else
     cmd = <<-EOS
-mc cat #{SRC_DIR}/#{fn} | IPFS_PATH=#{IPFS_PATH} ipfs add --stdin-name #{fn} --progress
+mc cat #{src_dir}/#{fn} | IPFS_PATH=#{IPFS_PATH} ipfs add --stdin-name #{fn} --progress
     EOS
     r = `#{cmd}`.split
     cid = r[1]
