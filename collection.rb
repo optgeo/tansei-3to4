@@ -11,20 +11,24 @@ EOS
 
 count = 0
 db.each {|r|
+  count += 1
   fn, cid = r
   fn = fn.sub(".copc.laz", "")
   url = "https://viewer.copc.io/?copc=https://x.optgeo.org/ipfs/#{cid}"
   img_path = "img/#{fn}.jpg"
+
+  w.print <<-EOS
+## #{fn}
+[![#{fn}:#{cid}](#{img_path})](#{url})
+  EOS
+  next if File.exist?(img_path)
+
   cmd = <<-EOS
 npx playwright screenshot --wait-for-timeout=#{WAIT * 1000} \
 "#{url}" #{img_path}
   EOS
-  w.print <<-EOS
-## #{fn}
-[![#{fn}:#{cid}](#{img_path})](#{url})
 
-  EOS
-  print cmd
+  print "#{count}: #{cmd}"
   system cmd
   w.flush
 }
